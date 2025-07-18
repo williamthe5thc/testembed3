@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-Frame-Options" content="ALLOWALL">
-    <title>Budget Calculator - Rise 360</title>
+    <title>Spending Plan Calculator</title>
     <style>
         * {
             margin: 0;
@@ -13,424 +13,983 @@
         }
 
         html, body {
-            height: 600px !important;
+            height: 100% !important;
             width: 100% !important;
-            overflow: hidden !important;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: white;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            overflow-y: auto;
         }
 
         .container {
-            height: 600px !important;
-            width: 100% !important;
+            max-width: 900px;
+            margin: 0 auto;
             background: white;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid #4a90e2;
+            min-height: 100vh;
         }
 
         .header {
-            background: linear-gradient(135deg, #4a90e2, #357abd);
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
             color: white;
-            padding: 12px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+            transform: skewX(-20deg);
         }
 
         .header h1 {
-            font-size: 18px;
-            margin-bottom: 4px;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
         }
 
-        .header p {
-            font-size: 12px;
-            opacity: 0.9;
+        .income-section {
+            padding: 30px;
+            border-bottom: 2px solid #eee;
         }
 
-        .spreadsheet {
-            flex: 1;
-            padding: 12px;
-            overflow: hidden;
-            background: #fafafa;
+        .income-title {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
         }
 
-        table {
+        .income-subtitle {
+            color: #666;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .income-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 11px;
-            background: white;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
-        th {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            color: #495057;
-            padding: 8px 4px;
-            text-align: center;
+        .income-header {
+            background: #1e3a8a;
+            color: white;
             font-weight: 600;
-            border: 1px solid #dee2e6;
-            font-size: 10px;
-            height: 30px;
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 16px;
         }
 
-        td {
-            border: 1px solid #dee2e6;
-            padding: 0;
-            height: 28px;
+        .income-cell {
+            border: 1px solid #ccc;
+            padding: 15px 10px;
+            text-align: center;
+            background: #f9f9f9;
         }
 
-        .cell-input {
+        .income-input {
             width: 100%;
-            height: 28px;
             border: none;
-            padding: 2px 4px;
-            text-align: center;
-            font-size: 10px;
             background: transparent;
-            outline: none;
-        }
-
-        .cell-input:focus {
-            background: #e3f2fd;
-            box-shadow: inset 0 0 0 2px #4a90e2;
-        }
-
-        .cell-input[readonly] {
-            background: #f8f9fa;
-            color: #495057;
+            text-align: center;
+            font-size: 16px;
+            padding: 5px;
             font-weight: 600;
         }
 
-        .section-header {
-            background: linear-gradient(135deg, #e3f2fd, #bbdefb) !important;
-            font-weight: bold;
-            color: #1565c0 !important;
+        .income-input:focus {
+            outline: 2px solid #0077b6;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .expenses-section {
+            padding: 30px;
+        }
+
+        .expenses-title {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 15px;
             text-align: center;
-            padding: 6px 4px;
-            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .expenses-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .expense-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .expense-category {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            background: #1e3a8a;
+            color: white;
+            padding: 12px 15px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .category-content {
+            background: white;
+        }
+
+        .category-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            border-bottom: 1px solid #eee;
+        }
+
+        .category-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .row-header {
+            background: #1e3a8a;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .item-label {
+            padding: 8px 12px;
+            border-right: 1px solid #eee;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+
+        .item-input {
+            width: 100%;
+            border: none;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            border-right: 1px solid #eee;
+        }
+
+        .item-input:focus {
+            outline: 2px solid #0077b6;
+            background: #e3f2fd;
         }
 
         .total-row {
-            background: linear-gradient(135deg, #fff3e0, #ffe0b2) !important;
-        }
-
-        .net-row {
-            background: linear-gradient(135deg, #e8f5e8, #c8e6c9) !important;
-        }
-
-        .controls {
-            height: 45px;
-            background: linear-gradient(135deg, #f5f5f5, #eeeeee);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            border-top: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        button {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
+            background: #f8f9fa;
             font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            border-top: 2px solid #1e3a8a;
         }
 
-        button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        .total-row .item-label {
+            background: #f8f9fa;
+            font-weight: 600;
         }
 
-        .btn-calc { 
-            background: linear-gradient(135deg, #4a90e2, #357abd); 
-            color: white; 
-        }
-        
-        .btn-clear { 
-            background: linear-gradient(135deg, #dc3545, #c82333); 
-            color: white; 
-        }
-        
-        .btn-export { 
-            background: linear-gradient(135deg, #28a745, #218838); 
-            color: white; 
+        .total-row .item-input {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #1e3a8a;
         }
 
-        /* Responsive for smaller iframes */
-        @media (max-width: 600px) {
-            .header h1 { font-size: 16px; }
-            .header p { font-size: 11px; }
-            table { font-size: 10px; }
-            th { font-size: 9px; padding: 6px 2px; }
-            .cell-input { font-size: 9px; }
-            button { font-size: 10px; padding: 5px 10px; }
+        .net-income-section {
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 3px solid #0077b6;
         }
 
-        /* Success/Error indicators */
-        .positive { color: #2e7d32 !important; font-weight: bold; }
-        .negative { color: #c62828 !important; font-weight: bold; }
-        .neutral { color: #1565c0 !important; font-weight: bold; }
+        .net-income-title {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .net-income-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .net-income-header {
+            background: #1e3a8a;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .net-income-cell {
+            border: 1px solid #ccc;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            background: white;
+        }
+
+        .calculation-symbol {
+            background: #f0f0f0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #666;
+        }
+
+        .footer {
+            padding: 30px;
+            text-align: center;
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .brand-info {
+            font-size: 12px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .expense-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 36px;
+            }
+            
+            .income-section, .expenses-section, .net-income-section {
+                padding: 20px;
+            }
+            
+            .category-row {
+                grid-template-columns: 2fr 80px 80px;
+            }
+            
+            .item-input {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+
+        .positive { color: #28a745; }
+        .negative { color: #dc3545; }
+        .neutral { color: #666; }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <h1>💰 Interactive Budget Calculator</h1>
-            <p>Enter your monthly income and expenses to track your budget</p>
+            <h1>Spending Plan</h1>
         </div>
 
-        <div class="spreadsheet">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 25%;">Category</th>
-                        <th style="width: 15%;">Jan ($)</th>
-                        <th style="width: 15%;">Feb ($)</th>
-                        <th style="width: 15%;">Mar ($)</th>
-                        <th style="width: 15%;">Total ($)</th>
-                        <th style="width: 15%;">Avg ($)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="section-header"><strong>💵 INCOME</strong></td>
-                        <td></td><td></td><td></td><td></td><td></td>
-                    </tr>
-                    <tr>
-                        <td class="section-header">Salary</td>
-                        <td><input type="number" class="cell-input" data-row="1" data-col="1" placeholder="4000"></td>
-                        <td><input type="number" class="cell-input" data-row="1" data-col="2" placeholder="4000"></td>
-                        <td><input type="number" class="cell-input" data-row="1" data-col="3" placeholder="4000"></td>
-                        <td><input type="number" class="cell-input" data-row="1" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="1" data-col="5" readonly></td>
-                    </tr>
-                    <tr>
-                        <td class="section-header">Other Income</td>
-                        <td><input type="number" class="cell-input" data-row="2" data-col="1" placeholder="500"></td>
-                        <td><input type="number" class="cell-input" data-row="2" data-col="2" placeholder="500"></td>
-                        <td><input type="number" class="cell-input" data-row="2" data-col="3" placeholder="500"></td>
-                        <td><input type="number" class="cell-input" data-row="2" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="2" data-col="5" readonly></td>
-                    </tr>
-                    <tr class="total-row">
-                        <td class="section-header"><strong>📊 Total Income</strong></td>
-                        <td><input type="number" class="cell-input" data-row="3" data-col="1" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="3" data-col="2" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="3" data-col="3" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="3" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="3" data-col="5" readonly></td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="section-header"><strong>💸 EXPENSES</strong></td>
-                        <td></td><td></td><td></td><td></td><td></td>
-                    </tr>
-                    <tr>
-                        <td class="section-header">Housing</td>
-                        <td><input type="number" class="cell-input" data-row="4" data-col="1" placeholder="1200"></td>
-                        <td><input type="number" class="cell-input" data-row="4" data-col="2" placeholder="1200"></td>
-                        <td><input type="number" class="cell-input" data-row="4" data-col="3" placeholder="1200"></td>
-                        <td><input type="number" class="cell-input" data-row="4" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="4" data-col="5" readonly></td>
-                    </tr>
-                    <tr>
-                        <td class="section-header">Food</td>
-                        <td><input type="number" class="cell-input" data-row="5" data-col="1" placeholder="600"></td>
-                        <td><input type="number" class="cell-input" data-row="5" data-col="2" placeholder="650"></td>
-                        <td><input type="number" class="cell-input" data-row="5" data-col="3" placeholder="580"></td>
-                        <td><input type="number" class="cell-input" data-row="5" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="5" data-col="5" readonly></td>
-                    </tr>
-                    <tr>
-                        <td class="section-header">Transportation</td>
-                        <td><input type="number" class="cell-input" data-row="6" data-col="1" placeholder="300"></td>
-                        <td><input type="number" class="cell-input" data-row="6" data-col="2" placeholder="320"></td>
-                        <td><input type="number" class="cell-input" data-row="6" data-col="3" placeholder="310"></td>
-                        <td><input type="number" class="cell-input" data-row="6" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="6" data-col="5" readonly></td>
-                    </tr>
-                    <tr>
-                        <td class="section-header">Other Expenses</td>
-                        <td><input type="number" class="cell-input" data-row="7" data-col="1" placeholder="400"></td>
-                        <td><input type="number" class="cell-input" data-row="7" data-col="2" placeholder="450"></td>
-                        <td><input type="number" class="cell-input" data-row="7" data-col="3" placeholder="380"></td>
-                        <td><input type="number" class="cell-input" data-row="7" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="7" data-col="5" readonly></td>
-                    </tr>
-                    <tr class="total-row">
-                        <td class="section-header"><strong>📊 Total Expenses</strong></td>
-                        <td><input type="number" class="cell-input" data-row="8" data-col="1" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="8" data-col="2" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="8" data-col="3" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="8" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="8" data-col="5" readonly></td>
-                    </tr>
-                    
-                    <tr class="net-row">
-                        <td class="section-header"><strong>💰 NET INCOME</strong></td>
-                        <td><input type="number" class="cell-input" data-row="9" data-col="1" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="9" data-col="2" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="9" data-col="3" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="9" data-col="4" readonly></td>
-                        <td><input type="number" class="cell-input" data-row="9" data-col="5" readonly></td>
-                    </tr>
-                </tbody>
+        <!-- Income Section -->
+        <div class="income-section">
+            <h2 class="income-title">Income</h2>
+            <p class="income-subtitle">Calculate your monthly income, after taxes are removed.</p>
+            
+            <table class="income-table">
+                <tr>
+                    <td class="income-header">Income 1</td>
+                    <td class="income-header">Income 2</td>
+                    <td class="income-header">Other Income</td>
+                    <td class="income-header">Total Income</td>
+                </tr>
+                <tr>
+                    <td class="income-cell">
+                        <input type="number" class="income-input" id="income1" placeholder="Chartway - $2,000">
+                    </td>
+                    <td class="income-cell">
+                        <input type="number" class="income-input" id="income2" placeholder="Tax business - $833.33">
+                    </td>
+                    <td class="income-cell">
+                        <input type="number" class="income-input" id="income3" placeholder="0">
+                    </td>
+                    <td class="income-cell">
+                        <input type="number" class="income-input" id="totalIncome" readonly>
+                    </td>
+                </tr>
             </table>
         </div>
 
-        <div class="controls">
-            <button class="btn-calc" onclick="calculate()" title="Recalculate all totals">📊 Calculate</button>
-            <button class="btn-clear" onclick="clearAll()" title="Clear all input data">🗑️ Clear</button>
-            <button class="btn-export" onclick="exportData()" title="Download as CSV file">💾 Export</button>
+        <!-- Expenses Section -->
+        <div class="expenses-section">
+            <h2 class="expenses-title">Expenses</h2>
+            <p class="expenses-subtitle">Record your monthly expenses. For expenses that change from month-to-month, calculate the average cost. Add in any other expenses not listed.</p>
+            
+            <div class="expense-grid">
+                <!-- Housing -->
+                <div class="expense-category">
+                    <div class="category-header">Housing</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Rent/Mortgage</div>
+                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="350">
+                            <input type="number" class="item-input spent-input" data-category="housing">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Taxes</div>
+                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="housing">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Insurance</div>
+                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="housing">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Maintenance</div>
+                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="housing">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Repairs</div>
+                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="housing">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="housingBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="housingSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Utilities -->
+                <div class="expense-category">
+                    <div class="category-header">Utilities</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Electricity</div>
+                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Gas</div>
+                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Water</div>
+                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Sewer/Trash</div>
+                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Internet</div>
+                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Phone</div>
+                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="120">
+                            <input type="number" class="item-input spent-input" data-category="utilities">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Cable/ Streaming</div>
+                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="20">
+                            <input type="number" class="item-input spent-input" data-category="utilities">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="utilitiesBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="utilitiesSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family Needs -->
+                <div class="expense-category">
+                    <div class="category-header">Family Needs</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Daycare/Babysitting</div>
+                            <input type="number" class="item-input budget-input" data-category="family" placeholder="732">
+                            <input type="number" class="item-input spent-input" data-category="family">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Kids Sports/Activities</div>
+                            <input type="number" class="item-input budget-input" data-category="family" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="family">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Kids Personal Care</div>
+                            <input type="number" class="item-input budget-input" data-category="family" placeholder="100">
+                            <input type="number" class="item-input spent-input" data-category="family">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Kids Clothing</div>
+                            <input type="number" class="item-input budget-input" data-category="family" placeholder="100">
+                            <input type="number" class="item-input spent-input" data-category="family">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Kids Supplies</div>
+                            <input type="number" class="item-input budget-input" data-category="family" placeholder="200">
+                            <input type="number" class="item-input spent-input" data-category="family">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="familyBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="familySpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Food -->
+                <div class="expense-category">
+                    <div class="category-header">Food</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Grocery</div>
+                            <input type="number" class="item-input budget-input" data-category="food" placeholder="400">
+                            <input type="number" class="item-input spent-input" data-category="food">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Dining Out</div>
+                            <input type="number" class="item-input budget-input" data-category="food" placeholder="100">
+                            <input type="number" class="item-input spent-input" data-category="food">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="foodBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="foodSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transportation -->
+                <div class="expense-category">
+                    <div class="category-header">Transportation</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Car Loan 1</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Car Loan 2</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Public Transportation</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Car Insurance</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Gas</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="120">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Maintenance</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="50">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Repairs</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="50">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Tolls</div>
+                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="transportationBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="transportationSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health -->
+                <div class="expense-category">
+                    <div class="category-header">Health</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Medical bills</div>
+                            <input type="number" class="item-input budget-input" data-category="health" placeholder="50">
+                            <input type="number" class="item-input spent-input" data-category="health">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Medications/Vitamins</div>
+                            <input type="number" class="item-input budget-input" data-category="health" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="health">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Medical Visits</div>
+                            <input type="number" class="item-input budget-input" data-category="health" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="health">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="healthBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="healthSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal -->
+                <div class="expense-category">
+                    <div class="category-header">Personal</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Personal Care</div>
+                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="personal">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Clothing</div>
+                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="personal">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Subscriptions</div>
+                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="personal">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Hair</div>
+                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="100">
+                            <input type="number" class="item-input spent-input" data-category="personal">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Nails</div>
+                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="personal">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="personalBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="personalSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lifestyle -->
+                <div class="expense-category">
+                    <div class="category-header">Lifestyle</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Entertainment</div>
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="50">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Hobbies</div>
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Gym</div>
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Gifts</div>
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Subscriptions</div>
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Canva</div>
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="15">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="lifestyleBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="lifestyleSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Debts -->
+                <div class="expense-category">
+                    <div class="category-header">Debts</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Credit Card 1</div>
+                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="25">
+                            <input type="number" class="item-input spent-input" data-category="debts">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Credit Card 2</div>
+                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="25">
+                            <input type="number" class="item-input spent-input" data-category="debts">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Personal Loan</div>
+                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="514.69">
+                            <input type="number" class="item-input spent-input" data-category="debts">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Student Loan(s)</div>
+                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="51.17">
+                            <input type="number" class="item-input spent-input" data-category="debts">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Shell</div>
+                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="30">
+                            <input type="number" class="item-input spent-input" data-category="debts">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Navy Fed</div>
+                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="25">
+                            <input type="number" class="item-input spent-input" data-category="debts">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="debtsBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="debtsSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Savings -->
+                <div class="expense-category">
+                    <div class="category-header">Savings</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Emergency Savings</div>
+                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="111">
+                            <input type="number" class="item-input spent-input" data-category="savings">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Savings Fund</div>
+                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="savings">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Retirement</div>
+                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="savings">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Home Down payment</div>
+                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="900">
+                            <input type="number" class="item-input spent-input" data-category="savings">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="savingsBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="savingsSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investments & Insurance -->
+                <div class="expense-category">
+                    <div class="category-header">Investments & Insurance</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Life Insurance</div>
+                            <input type="number" class="item-input budget-input" data-category="investments" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="investments">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Investments</div>
+                            <input type="number" class="item-input budget-input" data-category="investments" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="investments">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="investmentsBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="investmentsSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charity -->
+                <div class="expense-category">
+                    <div class="category-header">Charity</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Tithes</div>
+                            <input type="number" class="item-input budget-input" data-category="charity" placeholder="300">
+                            <input type="number" class="item-input spent-input" data-category="charity">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Charity</div>
+                            <input type="number" class="item-input budget-input" data-category="charity" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="charity">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="charityBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="charitySpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pet Care Needs -->
+            <div class="expense-grid" style="grid-template-columns: 1fr; max-width: 400px; margin: 0 auto;">
+                <div class="expense-category">
+                    <div class="category-header">Pet Care Needs</div>
+                    <div class="category-content">
+                        <div class="category-row">
+                            <div class="row-header"></div>
+                            <div class="row-header">Budget</div>
+                            <div class="row-header">Spent</div>
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Food/Treats</div>
+                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Vet Expenses</div>
+                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Medications</div>
+                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Pet Supplies</div>
+                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare">
+                        </div>
+                        <div class="category-row">
+                            <div class="item-label">Daycare/Boarding</div>
+                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare">
+                        </div>
+                        <div class="category-row total-row">
+                            <div class="item-label">Total:</div>
+                            <input type="number" class="item-input total-budget" id="petcareBudgetTotal" readonly>
+                            <input type="number" class="item-input total-spent" id="petcareSpentTotal" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Net Income Section -->
+        <div class="net-income-section">
+            <h2 class="net-income-title">Net Income</h2>
+            
+            <table class="net-income-table">
+                <tr>
+                    <td class="net-income-header">Income</td>
+                    <td class="net-income-header calculation-symbol">—</td>
+                    <td class="net-income-header">Expenses</td>
+                    <td class="net-income-header calculation-symbol">=</td>
+                    <td class="net-income-header">Total After Saving/Expenses (Net Income)</td>
+                </tr>
+                <tr>
+                    <td class="net-income-cell" id="finalIncomeDisplay">$2,833.33</td>
+                    <td class="net-income-cell calculation-symbol">—</td>
+                    <td class="net-income-cell" id="finalExpensesDisplay">$4,538.86</td>
+                    <td class="net-income-cell calculation-symbol">=</td>
+                    <td class="net-income-cell" id="finalNetIncomeDisplay">($1,705.53)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="brand-logo">CREDIT UNION GOES HERE</div>
+            <div class="brand-logo" style="font-size: 16px; margin-top: -5px;">CREDIT UNION</div>
+            <div class="brand-info">
+             ADDRESS GOES HERE (I removed it)
+            </div>
         </div>
     </div>
 
     <script>
-        function calculate() {
-            // Calculate for each month and totals
-            for (let col = 1; col <= 5; col++) {
-                // Income calculations
-                const salary = parseFloat(document.querySelector(`[data-row="1"][data-col="${col}"]`).value) || 0;
-                const otherIncome = parseFloat(document.querySelector(`[data-row="2"][data-col="${col}"]`).value) || 0;
-                const totalIncome = salary + otherIncome;
-                document.querySelector(`[data-row="3"][data-col="${col}"]`).value = totalIncome.toFixed(2);
-                
-                // Expense calculations
-                const housing = parseFloat(document.querySelector(`[data-row="4"][data-col="${col}"]`).value) || 0;
-                const food = parseFloat(document.querySelector(`[data-row="5"][data-col="${col}"]`).value) || 0;
-                const transport = parseFloat(document.querySelector(`[data-row="6"][data-col="${col}"]`).value) || 0;
-                const other = parseFloat(document.querySelector(`[data-row="7"][data-col="${col}"]`).value) || 0;
-                const totalExpenses = housing + food + transport + other;
-                document.querySelector(`[data-row="8"][data-col="${col}"]`).value = totalExpenses.toFixed(2);
-                
-                // Net income calculation with color coding
-                const netIncome = totalIncome - totalExpenses;
-                const netCell = document.querySelector(`[data-row="9"][data-col="${col}"]`);
-                netCell.value = netIncome.toFixed(2);
-                
-                // Apply color coding
-                netCell.className = netCell.className.replace(/positive|negative|neutral/g, '');
-                if (netIncome > 0) {
-                    netCell.classList.add('positive');
-                } else if (netIncome < 0) {
-                    netCell.classList.add('negative');
-                } else {
-                    netCell.classList.add('neutral');
-                }
-            }
+        function calculateCategoryTotal(category) {
+            const budgetInputs = document.querySelectorAll(`[data-category="${category}"].budget-input`);
+            const spentInputs = document.querySelectorAll(`[data-category="${category}"].spent-input`);
             
-            // Calculate row totals and averages
-            for (let row = 1; row <= 9; row++) {
-                let total = 0;
-                for (let col = 1; col <= 3; col++) {
-                    const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-                    if (cell && !cell.readOnly) {
-                        total += parseFloat(cell.value) || 0;
-                    }
-                }
-                
-                // Set total
-                const totalCell = document.querySelector(`[data-row="${row}"][data-col="4"]`);
-                if (totalCell) {
-                    totalCell.value = total.toFixed(2);
-                }
-                
-                // Set average
-                const avgCell = document.querySelector(`[data-row="${row}"][data-col="5"]`);
-                if (avgCell) {
-                    avgCell.value = (total / 3).toFixed(2);
-                }
+            let budgetTotal = 0;
+            let spentTotal = 0;
+            
+            budgetInputs.forEach(input => {
+                budgetTotal += parseFloat(input.value) || 0;
+            });
+            
+            spentInputs.forEach(input => {
+                spentTotal += parseFloat(input.value) || 0;
+            });
+            
+            document.getElementById(`${category}BudgetTotal`).value = budgetTotal.toFixed(2);
+            document.getElementById(`${category}SpentTotal`).value = spentTotal.toFixed(2);
+        }
+
+        function calculateGrandTotals() {
+            // Calculate total income
+            const income1 = parseFloat(document.getElementById('income1').value) || 0;
+            const income2 = parseFloat(document.getElementById('income2').value) || 0;
+            const income3 = parseFloat(document.getElementById('income3').value) || 0;
+            const totalIncome = income1 + income2 + income3;
+            
+            document.getElementById('totalIncome').value = totalIncome.toFixed(2);
+            
+            // Calculate total expenses (sum of all category budget totals)
+            const categories = ['housing', 'utilities', 'family', 'food', 'transportation', 'health', 'personal', 'lifestyle', 'debts', 'savings', 'investments', 'charity', 'petcare'];
+            let totalExpenses = 0;
+            
+            categories.forEach(category => {
+                const budgetTotal = parseFloat(document.getElementById(`${category}BudgetTotal`).value) || 0;
+                totalExpenses += budgetTotal;
+            });
+            
+            // Calculate net income
+            const netIncome = totalIncome - totalExpenses;
+            
+            // Update final display
+            document.getElementById('finalIncomeDisplay').textContent = `$${totalIncome.toFixed(2)}`;
+            document.getElementById('finalExpensesDisplay').textContent = `$${totalExpenses.toFixed(2)}`;
+            
+            const netDisplay = document.getElementById('finalNetIncomeDisplay');
+            if (netIncome < 0) {
+                netDisplay.textContent = `($${Math.abs(netIncome).toFixed(2)})`;
+                netDisplay.className = 'net-income-cell negative';
+            } else {
+                netDisplay.textContent = `$${netIncome.toFixed(2)}`;
+                netDisplay.className = 'net-income-cell positive';
             }
         }
 
-        function clearAll() {
-            if (confirm('Clear all input data? This will reset the calculator.')) {
-                document.querySelectorAll('input:not([readonly])').forEach(input => {
-                    input.value = '';
-                });
-                calculate();
-            }
+        function recalculateAll() {
+            const categories = ['housing', 'utilities', 'family', 'food', 'transportation', 'health', 'personal', 'lifestyle', 'debts', 'savings', 'investments', 'charity', 'petcare'];
+            
+            categories.forEach(category => {
+                calculateCategoryTotal(category);
+            });
+            
+            calculateGrandTotals();
         }
 
-        function exportData() {
-            try {
-                const data = [];
-                const headers = ['Category', 'January', 'February', 'March', 'Total', 'Average'];
-                data.push(headers.join(','));
-                
-                const categories = [
-                    'Salary', 'Other Income', 'Total Income', '',
-                    'Housing', 'Food', 'Transportation', 'Other Expenses', 'Total Expenses', '',
-                    'Net Income'
-                ];
-                
-                const rows = [1, 2, 3, 0, 4, 5, 6, 7, 8, 0, 9];
-                
-                for (let i = 0; i < categories.length; i++) {
-                    if (categories[i] === '') {
-                        data.push('');
-                        continue;
-                    }
-                    
-                    const row = rows[i];
-                    const rowData = [categories[i]];
-                    
-                    for (let col = 1; col <= 5; col++) {
-                        const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-                        rowData.push(cell ? (cell.value || '0') : '0');
-                    }
-                    
-                    data.push(rowData.join(','));
-                }
-
-                const csvContent = data.join('\n');
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = 'budget_calculator.csv';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-            } catch (error) {
-                alert('Export failed. Please try copying the data manually.');
-            }
-        }
-
-        // Auto-calculate on input change
+        // Add event listeners for auto-calculation
         document.addEventListener('input', function(e) {
-            if (e.target.type === 'number' && !e.target.readOnly) {
-                setTimeout(calculate, 50);
+            if (e.target.classList.contains('budget-input') || e.target.classList.contains('spent-input') || e.target.classList.contains('income-input')) {
+                setTimeout(recalculateAll, 50);
             }
         });
 
-        // Initialize with sample data and calculate
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add some sample data
-            const sampleData = {
-                '1-1': '4000', '1-2': '4200', '1-3': '4100',
-                '2-1': '500', '2-2': '300', '2-3': '600',
-                '4-1': '1200', '4-2': '1200', '4-3': '1250',
-                '5-1': '600', '5-2': '650', '5-3': '580',
-                '6-1': '300', '6-2': '320', '6-3': '310',
-                '7-1': '400', '7-2': '450', '7-3': '380'
-            };
+        // Initialize with sample data
+        window.addEventListener('load', function() {
+            // Set sample income data
+            document.getElementById('income1').value = '2000';
+            document.getElementById('income2').value = '833.33';
             
-            Object.entries(sampleData).forEach(([key, value]) => {
-                const [row, col] = key.split('-');
-                const input = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-                if (input) input.value = value;
-            });
-            
-            calculate();
+            // Calculate initial totals
+            recalculateAll();
         });
     </script>
 </body>
