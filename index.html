@@ -17,14 +17,15 @@
             width: 100% !important;
             font-family: Arial, sans-serif;
             background: #f5f5f5;
-            overflow-y: auto;
+            overflow: hidden;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
             background: white;
-            min-height: 100vh;
+            height: 100vh;
+            overflow-y: auto;
         }
 
         .header {
@@ -332,13 +333,13 @@
                 </tr>
                 <tr>
                     <td class="income-cell">
-                        <input type="number" class="income-input" id="income1" placeholder="Chartway - $2,000">
+                        <input type="number" class="income-input" id="income1" value="0">
                     </td>
                     <td class="income-cell">
-                        <input type="number" class="income-input" id="income2" placeholder="Tax business - $833.33">
+                        <input type="number" class="income-input" id="income2" value="0">
                     </td>
                     <td class="income-cell">
-                        <input type="number" class="income-input" id="income3" placeholder="0">
+                        <input type="number" class="income-input" id="income3" value="0">
                     </td>
                     <td class="income-cell">
                         <input type="number" class="income-input" id="totalIncome" readonly>
@@ -364,28 +365,28 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Rent/Mortgage</div>
-                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="350">
-                            <input type="number" class="item-input spent-input" data-category="housing">
+                            <input type="number" class="item-input budget-input" data-category="housing" value="0">
+                            <input type="number" class="item-input spent-input" data-category="housing" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Taxes</div>
-                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="housing">
+                            <input type="number" class="item-input budget-input" data-category="housing" value="0">
+                            <input type="number" class="item-input spent-input" data-category="housing" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Insurance</div>
-                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="housing">
+                            <input type="number" class="item-input budget-input" data-category="housing" value="0">
+                            <input type="number" class="item-input spent-input" data-category="housing" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Maintenance</div>
-                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="housing">
+                            <input type="number" class="item-input budget-input" data-category="housing" value="0">
+                            <input type="number" class="item-input spent-input" data-category="housing" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Repairs</div>
-                            <input type="number" class="item-input budget-input" data-category="housing" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="housing">
+                            <input type="number" class="item-input budget-input" data-category="housing" value="0">
+                            <input type="number" class="item-input spent-input" data-category="housing" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -406,38 +407,38 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Electricity</div>
-                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="utilities">
+                            <input type="number" class="item-input budget-input" data-category="utilities" value="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Gas</div>
-                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="utilities">
+                            <input type="number" class="item-input budget-input" data-category="utilities" value="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Water</div>
-                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="utilities">
+                            <input type="number" class="item-input budget-input" data-category="utilities" value="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Sewer/Trash</div>
-                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="utilities">
+                            <input type="number" class="item-input budget-input" data-category="utilities" value="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Internet</div>
-                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="utilities">
+                            <input type="number" class="item-input budget-input" data-category="utilities" value="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Phone</div>
-                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="120">
-                            <input type="number" class="item-input spent-input" data-category="utilities">
+                            <input type="number" class="item-input budget-input" data-category="utilities" value="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Cable/ Streaming</div>
-                            <input type="number" class="item-input budget-input" data-category="utilities" placeholder="20">
-                            <input type="number" class="item-input spent-input" data-category="utilities">
+                            <input type="number" class="item-input budget-input" data-category="utilities" value="0">
+                            <input type="number" class="item-input spent-input" data-category="utilities" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -458,28 +459,28 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Daycare/Babysitting</div>
-                            <input type="number" class="item-input budget-input" data-category="family" placeholder="732">
-                            <input type="number" class="item-input spent-input" data-category="family">
+                            <input type="number" class="item-input budget-input" data-category="family" value="0">
+                            <input type="number" class="item-input spent-input" data-category="family" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Kids Sports/Activities</div>
-                            <input type="number" class="item-input budget-input" data-category="family" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="family">
+                            <input type="number" class="item-input budget-input" data-category="family" value="0">
+                            <input type="number" class="item-input spent-input" data-category="family" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Kids Personal Care</div>
-                            <input type="number" class="item-input budget-input" data-category="family" placeholder="100">
-                            <input type="number" class="item-input spent-input" data-category="family">
+                            <input type="number" class="item-input budget-input" data-category="family" value="0">
+                            <input type="number" class="item-input spent-input" data-category="family" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Kids Clothing</div>
-                            <input type="number" class="item-input budget-input" data-category="family" placeholder="100">
-                            <input type="number" class="item-input spent-input" data-category="family">
+                            <input type="number" class="item-input budget-input" data-category="family" value="0">
+                            <input type="number" class="item-input spent-input" data-category="family" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Kids Supplies</div>
-                            <input type="number" class="item-input budget-input" data-category="family" placeholder="200">
-                            <input type="number" class="item-input spent-input" data-category="family">
+                            <input type="number" class="item-input budget-input" data-category="family" value="0">
+                            <input type="number" class="item-input spent-input" data-category="family" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -500,13 +501,13 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Grocery</div>
-                            <input type="number" class="item-input budget-input" data-category="food" placeholder="400">
-                            <input type="number" class="item-input spent-input" data-category="food">
+                            <input type="number" class="item-input budget-input" data-category="food" value="0">
+                            <input type="number" class="item-input spent-input" data-category="food" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Dining Out</div>
-                            <input type="number" class="item-input budget-input" data-category="food" placeholder="100">
-                            <input type="number" class="item-input spent-input" data-category="food">
+                            <input type="number" class="item-input budget-input" data-category="food" value="0">
+                            <input type="number" class="item-input spent-input" data-category="food" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -527,43 +528,43 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Car Loan 1</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Car Loan 2</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Public Transportation</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Car Insurance</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Gas</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="120">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Maintenance</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="50">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Repairs</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="50">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Tolls</div>
-                            <input type="number" class="item-input budget-input" data-category="transportation" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="transportation">
+                            <input type="number" class="item-input budget-input" data-category="transportation" value="0">
+                            <input type="number" class="item-input spent-input" data-category="transportation" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -584,18 +585,18 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Medical bills</div>
-                            <input type="number" class="item-input budget-input" data-category="health" placeholder="50">
-                            <input type="number" class="item-input spent-input" data-category="health">
+                            <input type="number" class="item-input budget-input" data-category="health" value="0">
+                            <input type="number" class="item-input spent-input" data-category="health" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Medications/Vitamins</div>
-                            <input type="number" class="item-input budget-input" data-category="health" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="health">
+                            <input type="number" class="item-input budget-input" data-category="health" value="0">
+                            <input type="number" class="item-input spent-input" data-category="health" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Medical Visits</div>
-                            <input type="number" class="item-input budget-input" data-category="health" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="health">
+                            <input type="number" class="item-input budget-input" data-category="health" value="0">
+                            <input type="number" class="item-input spent-input" data-category="health" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -616,28 +617,28 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Personal Care</div>
-                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="personal">
+                            <input type="number" class="item-input budget-input" data-category="personal" value="0">
+                            <input type="number" class="item-input spent-input" data-category="personal" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Clothing</div>
-                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="personal">
+                            <input type="number" class="item-input budget-input" data-category="personal" value="0">
+                            <input type="number" class="item-input spent-input" data-category="personal" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Subscriptions</div>
-                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="personal">
+                            <input type="number" class="item-input budget-input" data-category="personal" value="0">
+                            <input type="number" class="item-input spent-input" data-category="personal" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Hair</div>
-                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="100">
-                            <input type="number" class="item-input spent-input" data-category="personal">
+                            <input type="number" class="item-input budget-input" data-category="personal" value="0">
+                            <input type="number" class="item-input spent-input" data-category="personal" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Nails</div>
-                            <input type="number" class="item-input budget-input" data-category="personal" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="personal">
+                            <input type="number" class="item-input budget-input" data-category="personal" value="0">
+                            <input type="number" class="item-input spent-input" data-category="personal" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -658,33 +659,33 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Entertainment</div>
-                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="50">
-                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" value="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Hobbies</div>
-                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" value="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Gym</div>
-                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" value="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Gifts</div>
-                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" value="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Subscriptions</div>
-                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" value="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Canva</div>
-                            <input type="number" class="item-input budget-input" data-category="lifestyle" placeholder="15">
-                            <input type="number" class="item-input spent-input" data-category="lifestyle">
+                            <input type="number" class="item-input budget-input" data-category="lifestyle" value="0">
+                            <input type="number" class="item-input spent-input" data-category="lifestyle" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -705,33 +706,33 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Credit Card 1</div>
-                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="25">
-                            <input type="number" class="item-input spent-input" data-category="debts">
+                            <input type="number" class="item-input budget-input" data-category="debts" value="0">
+                            <input type="number" class="item-input spent-input" data-category="debts" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Credit Card 2</div>
-                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="25">
-                            <input type="number" class="item-input spent-input" data-category="debts">
+                            <input type="number" class="item-input budget-input" data-category="debts" value="0">
+                            <input type="number" class="item-input spent-input" data-category="debts" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Personal Loan</div>
-                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="514.69">
-                            <input type="number" class="item-input spent-input" data-category="debts">
+                            <input type="number" class="item-input budget-input" data-category="debts" value="0">
+                            <input type="number" class="item-input spent-input" data-category="debts" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Student Loan(s)</div>
-                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="51.17">
-                            <input type="number" class="item-input spent-input" data-category="debts">
+                            <input type="number" class="item-input budget-input" data-category="debts" value="0">
+                            <input type="number" class="item-input spent-input" data-category="debts" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Shell</div>
-                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="30">
-                            <input type="number" class="item-input spent-input" data-category="debts">
+                            <input type="number" class="item-input budget-input" data-category="debts" value="0">
+                            <input type="number" class="item-input spent-input" data-category="debts" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Navy Fed</div>
-                            <input type="number" class="item-input budget-input" data-category="debts" placeholder="25">
-                            <input type="number" class="item-input spent-input" data-category="debts">
+                            <input type="number" class="item-input budget-input" data-category="debts" value="0">
+                            <input type="number" class="item-input spent-input" data-category="debts" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -752,23 +753,23 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Emergency Savings</div>
-                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="111">
-                            <input type="number" class="item-input spent-input" data-category="savings">
+                            <input type="number" class="item-input budget-input" data-category="savings" value="0">
+                            <input type="number" class="item-input spent-input" data-category="savings" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Savings Fund</div>
-                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="savings">
+                            <input type="number" class="item-input budget-input" data-category="savings" value="0">
+                            <input type="number" class="item-input spent-input" data-category="savings" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Retirement</div>
-                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="savings">
+                            <input type="number" class="item-input budget-input" data-category="savings" value="0">
+                            <input type="number" class="item-input spent-input" data-category="savings" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Home Down payment</div>
-                            <input type="number" class="item-input budget-input" data-category="savings" placeholder="900">
-                            <input type="number" class="item-input spent-input" data-category="savings">
+                            <input type="number" class="item-input budget-input" data-category="savings" value="0">
+                            <input type="number" class="item-input spent-input" data-category="savings" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -789,13 +790,13 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Life Insurance</div>
-                            <input type="number" class="item-input budget-input" data-category="investments" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="investments">
+                            <input type="number" class="item-input budget-input" data-category="investments" value="0">
+                            <input type="number" class="item-input spent-input" data-category="investments" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Investments</div>
-                            <input type="number" class="item-input budget-input" data-category="investments" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="investments">
+                            <input type="number" class="item-input budget-input" data-category="investments" value="0">
+                            <input type="number" class="item-input spent-input" data-category="investments" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -816,13 +817,13 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Tithes</div>
-                            <input type="number" class="item-input budget-input" data-category="charity" placeholder="300">
-                            <input type="number" class="item-input spent-input" data-category="charity">
+                            <input type="number" class="item-input budget-input" data-category="charity" value="0">
+                            <input type="number" class="item-input spent-input" data-category="charity" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Charity</div>
-                            <input type="number" class="item-input budget-input" data-category="charity" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="charity">
+                            <input type="number" class="item-input budget-input" data-category="charity" value="0">
+                            <input type="number" class="item-input spent-input" data-category="charity" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -845,28 +846,28 @@
                         </div>
                         <div class="category-row">
                             <div class="item-label">Food/Treats</div>
-                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="petcare">
+                            <input type="number" class="item-input budget-input" data-category="petcare" value="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Vet Expenses</div>
-                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="petcare">
+                            <input type="number" class="item-input budget-input" data-category="petcare" value="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Medications</div>
-                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="petcare">
+                            <input type="number" class="item-input budget-input" data-category="petcare" value="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Pet Supplies</div>
-                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="petcare">
+                            <input type="number" class="item-input budget-input" data-category="petcare" value="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare" value="0">
                         </div>
                         <div class="category-row">
                             <div class="item-label">Daycare/Boarding</div>
-                            <input type="number" class="item-input budget-input" data-category="petcare" placeholder="0">
-                            <input type="number" class="item-input spent-input" data-category="petcare">
+                            <input type="number" class="item-input budget-input" data-category="petcare" value="0">
+                            <input type="number" class="item-input spent-input" data-category="petcare" value="0">
                         </div>
                         <div class="category-row total-row">
                             <div class="item-label">Total:</div>
@@ -891,11 +892,11 @@
                     <td class="net-income-header">Total After Saving/Expenses (Net Income)</td>
                 </tr>
                 <tr>
-                    <td class="net-income-cell" id="finalIncomeDisplay">$2,833.33</td>
+                    <td class="net-income-cell" id="finalIncomeDisplay">$0.00</td>
                     <td class="net-income-cell calculation-symbol">—</td>
-                    <td class="net-income-cell" id="finalExpensesDisplay">$4,538.86</td>
+                    <td class="net-income-cell" id="finalExpensesDisplay">$0.00</td>
                     <td class="net-income-cell calculation-symbol">=</td>
-                    <td class="net-income-cell" id="finalNetIncomeDisplay">($1,705.53)</td>
+                    <td class="net-income-cell" id="finalNetIncomeDisplay">$0.00</td>
                 </tr>
             </table>
         </div>
@@ -905,7 +906,7 @@
             <div class="brand-logo">CREDIT UNION GOES HERE</div>
             <div class="brand-logo" style="font-size: 16px; margin-top: -5px;">CREDIT UNION</div>
             <div class="brand-info">
-             ADDRESS GOES HERE (I removed it)
+                ADDRESS GOES HERE (I removed it)
             </div>
         </div>
     </div>
@@ -982,13 +983,9 @@
             }
         });
 
-        // Initialize with sample data
+        // Initialize with all zeros
         window.addEventListener('load', function() {
-            // Set sample income data
-            document.getElementById('income1').value = '2000';
-            document.getElementById('income2').value = '833.33';
-            
-            // Calculate initial totals
+            // Calculate initial totals (should all be 0)
             recalculateAll();
         });
     </script>
